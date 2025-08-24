@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB qoşuldu'))
 .catch((err) => console.log('MongoDB xətası:', err));
 
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/userRoutes');
 app.use('/api/auth', authRoutes);
 
 app.use('/api', productRoutes);

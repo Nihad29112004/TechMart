@@ -12,9 +12,14 @@ router.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
+        // Body yoxlaması
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Zəhmət olmasa bütün sahələri doldurun" });
+        }
+
         // Email artıq varsa, istifadəçini qeydiyyata alma
-        const userExisiting = await User.findOne({ email });
-        if (userExisiting) {
+        const userExisting = await User.findOne({ email });
+        if (userExisting) {
             return res.status(400).json({ message: "Bu email artıq mövcuddur" });
         }
 
@@ -30,10 +35,14 @@ router.post('/register', async (req, res) => {
 
         // Cavab olaraq istifadəçi və token göndəririk
         res.status(201).json({ user, token });
+
     } catch (err) {
-        res.status(500).json({ message: 'Server xətası' });
+        // Xətanı konsola yazdırırıq ki, görək problem nədir
+        console.log("Register Xətası:", err);
+        res.status(500).json({ message: 'Server xətası', error: err.message });
     }
 });
+
 
 // ========================
 // LOGIN
