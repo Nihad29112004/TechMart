@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
+const orderRoutes = require('./routes/order');  // <-- burada əlavə et
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +22,7 @@ const authRoutes = require('./routes/userRoutes');
 app.use('/api/auth', authRoutes);
 
 app.use('/api', productRoutes);
+app.use('/api/orders', orderRoutes);  // <-- burada order routes əlavə edilir
 
 app.get('/', (req, res) => {
     res.send('Techymart Backend hazırdır!');
