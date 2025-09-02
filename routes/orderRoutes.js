@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const authMiddleware = require('../middleware/authMiddleware'); // Auth middleware əlavə edilir
+const adminMiddleware = require('../middleware/adminMiddleware');
 
 // Bütün route-lara auth middleware tətbiq edilir
 router.use(authMiddleware);
+router.use(adminMiddleware);
 
 // CREATE - Yeni order yaratmaq
 router.post('/', async (req, res) => {

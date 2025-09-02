@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 const authMiddleware = require('../middleware/authMiddleware');
+const adminMiddleware = require('../middleware/adminMiddleware');
 
 
 //yaratmaq
-router.post('/products', authMiddleware , async (req, res) => {
+router.post('/products', authMiddleware , adminMiddleware , async (req, res) => {
     try {
         const { name, category, price, description, image } = req.body;
         const product = new Product({ name, category, price, description, image });
@@ -38,7 +39,7 @@ router.get('/products/:id', authMiddleware , async (req , res)=>{
     }
 });
 //mehsulu yenilemek yeni update
-router.put('/products/:id', authMiddleware , async (req, res) => {
+router.put('/products/:id', authMiddleware , adminMiddleware , async (req, res) => {
     try {
         const { name, category, price, description, image } = req.body;
         const updated = await Product.findByIdAndUpdate(
@@ -54,7 +55,7 @@ router.put('/products/:id', authMiddleware , async (req, res) => {
 });
 
 //daxil etdiyimiz id ye gore mehsul silmek delete
-router.delete('/products/:id', authMiddleware , async (req, res) => {
+router.delete('/products/:id', authMiddleware , adminMiddleware , async (req, res) => {
     try {
         const deleted = await Product.findByIdAndDelete(req.params.id);
         if (!deleted) return res.status(404).json({ message: "Məhsul tapılmadı" });

@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
         await user.save();
 
         // Token yaradırıq
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, role:user.role}, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Cavab olaraq istifadəçi və token göndəririk
         res.status(201).json({ user, token });
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: 'Şifrə səhvdir' });
 
         // Token yaradırıq
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, role:user.role}, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({ user, token });
     } catch (err) {

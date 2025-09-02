@@ -2,7 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/order');  // <-- burada əlavə et
+const orderRoutes = require('./routes/orderRoutes'); 
+const authRoutes = require('./routes/userRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -18,11 +20,10 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB qoşuldu'))
 .catch((err) => console.log('MongoDB xətası:', err));
 
-const authRoutes = require('./routes/userRoutes');
 app.use('/api/auth', authRoutes);
-
 app.use('/api', productRoutes);
-app.use('/api/orders', orderRoutes);  // <-- burada order routes əlavə edilir
+app.use('/api/orders', orderRoutes);  
+app.use('/api/cart', cartRoutes);  
 
 app.get('/', (req, res) => {
     res.send('Techymart Backend hazırdır!');
