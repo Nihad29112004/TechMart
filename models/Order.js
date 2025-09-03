@@ -30,6 +30,11 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
     default: 'pending',
   },
+  paymentStatus: {
+    type: String,
+    enum: ['unpaid', 'paid', 'failed'],
+    default: 'unpaid',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -37,3 +42,4 @@ const orderSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Order', orderSchema);
+  
